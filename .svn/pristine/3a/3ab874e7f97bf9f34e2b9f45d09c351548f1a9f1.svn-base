@@ -1,0 +1,7 @@
+# Be sure to restart your server when you modify this file.
+
+# Your secret key for verifying the integrity of signed cookies.
+# If you change this key, all old signed cookies will become invalid!
+# Make sure the secret is at least 30 characters and all random,
+# no regular words or you'll be exposed to dictionary attacks.
+Floodtide::Application.config.secret_token = '04bd40993dee6d8e3692cffebc041f41ed2afefd404dcfc237573f0bc4977d638eac81bfc9df2fe17238a5b5d31c38889956cb338af8bcecbb0c5f7c1b604ed4'

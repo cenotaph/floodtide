@@ -1,0 +1,9 @@
+class Page < ActiveRecord::Base
+  attr_accessible :body, :published, :slug, :subtitle, :title, :images_attributes, :carousel, :page_icon, :page_icon_caption
+  has_many :images, :as => :attachable
+  accepts_nested_attributes_for :images, :allow_destroy => true
+  extend FriendlyId
+  friendly_id :title, use: :slugged  
+  mount_uploader :carousel, ImageUploader
+  mount_uploader :page_icon, ImageUploader
+end

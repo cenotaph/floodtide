@@ -1,0 +1,1 @@
+%iframe{:frameborder => "no", :height => "166", :scrolling => "no", :src => "http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F" + soundcloud_id + "&show_artwork=true", :width => "95%"}

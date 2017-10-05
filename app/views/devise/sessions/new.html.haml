@@ -1,0 +1,22 @@
+
+
+.sixteen.columns.sign_in
+  %h2 Sign in
+  .four.columns.alpha
+    = link_to '/auth/facebook' do
+      %center
+        = image_tag 'facebook_icon.png'
+        .title Sign in via Facebook
+      
+  .four.columns
+    = link_to '/auth/twitter' do
+      %center
+        = image_tag 'twitter_icon.png'
+        .title Sign in via Twitter
+    
+  .four.columns
+    = link_to '/auth/google_oauth2' do
+      %center
+        = image_tag 'google_icon.png'
+        .title Sign in via Google/GMail
+

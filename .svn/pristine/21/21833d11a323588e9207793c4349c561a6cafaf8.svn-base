@@ -1,0 +1,9 @@
+.profile
+  %h2= @user.name
+  = image_tag @user.icon(:avatar)
+  - if user_signed_in?
+    - if current_user == @user
+      .meta= link_to 'Change photo', upload_avatar_user_path(@user)
+  %p
+    Comments:
+    = @user.comments.size

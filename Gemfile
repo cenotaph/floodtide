@@ -1,0 +1,71 @@
+source 'https://rubygems.org'
+# ruby '2.2.5'
+gem 'rails', '5.1.4'
+
+# Bundle edge Rails instead:
+# gem 'rails', :git => 'git://github.com/rails/rails.git'
+gem 'carrierwave'
+gem 'ckeditor'
+gem 'devise'
+gem 'eventmachine', '1.0.4'
+gem 'figaro'
+gem 'formtastic'
+gem 'friendly_id'
+gem 'haml'
+gem 'haml-rails'
+gem 'httpclient'
+gem 'inherited_resources'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem "jquery-slick-rails"
+gem 'kaminari'
+gem 'mini_magick'
+gem 'mysql2' #, "~> 0.3.11"
+gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
+gem 'oauth-client'
+gem 'omniauth-facebook' #, '1.4.0'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-twitter'
+gem 'skeleton-rails', :git => 'https://github.com/helios-technologies/skeleton-rails'
+gem 'truncate_html'
+gem 'vimeo'
+
+# Gems used only for assets and not required
+# in production environments by default
+
+group :development do
+
+  gem 'binding_of_caller'
+  # gem 'quiet_assets'
+  gem 'thin'
+end
+
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  # gem 'therubyracer', :platforms => :ruby
+  # gem 'jquery-ui-rails'
+  gem 'uglifier', '>= 1.0.3'
+end
+
+
+group :production do
+  gem 'therubyracer'
+end
+
+# To use ActiveModel has_secure_password
+# gem 'bcrypt-ruby', '~> 3.0.0'
+
+# To use Jbuilder templates for JSON
+# gem 'jbuilder'
+
+# Use unicorn as the app server
+# gem 'unicorn'
+
+# Deploy with Capistrano
+# gem 'capistrano'
+
+# To use debugger
+# gem 'debugger'

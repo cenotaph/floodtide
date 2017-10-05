@@ -1,0 +1,9 @@
+class PostsController < InheritedResources::Base
+  # before_filter :authenticate_user!, :only => [:new, :edit, :create, :destroy, :update]
+  before_filter :authenticate_admin!, :only => [:new, :edit, :create, :destroy, :update]
+  
+  def index
+    @posts = Post.published.order("published_at DESC")
+  end
+  
+end

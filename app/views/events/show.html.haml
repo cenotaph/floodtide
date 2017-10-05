@@ -1,0 +1,31 @@
+.columns.twelve.alpha.event_main
+  .title
+    = @event.title
+    - if user_signed_in?
+      %span.edit_link= link_to '[edit]', edit_event_path(@event) 
+  .date
+    = @event.hidedate == true ? @event.try(:hide_text) :  @event.when.strftime('%B %d, %Y')
+  = render :partial => 'shared/carousel', :locals => {:images => @event.images, :id => @event.id }
+
+  .description= raw @event.description
+
+  - unless @event.soundclouds.empty?
+    - @event.soundclouds.each do |sc|
+      .soundcloud_title= sc.title
+      = render :partial => 'shared/soundcloud', :locals => {:soundcloud_id => sc.codenumber.to_s }
+
+  - unless @event.videos.empty?
+    - @event.videos.each do |vim|
+      .vimeo_title= vim.title
+      = render :partial => 'shared/vimeo', :locals => {:video => Vimeo::Simple::Video.info(vim.codenumber).first }
+.columns.omega.sidebar.four
+  .title Other Events
+  - Event.published.to_a.delete_if{|x| x == @event }.each do |event|
+    .event
+      = link_to (event) do
+        = image_tag event.images.first.imagefile.url(:sidebar)
+        .event_title
+          = event.title
+          - if user_signed_in?
+            %span.edit_link= link_to '[edit]', edit_event_path(event) 
+

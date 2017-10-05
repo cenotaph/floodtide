@@ -1,0 +1,36 @@
+Floodtide::Application.routes.draw do
+  
+  devise_for :users 
+  devise_scope :user do
+    get "/admin_sign_in" => "adminuser#new"
+  end
+  resources :pages
+  resources :posts do
+    resources :comments
+  end
+  resources :events
+  resources :videos
+  resources :users do
+    member do
+      get :upload_avatar
+    end
+  end
+
+
+  mount Ckeditor::Engine => '/ckeditor'
+  match '/admin' => 'application#admin'
+  match '/admin_sign_in' => 'adminuser#new'
+  match '/archive' => 'videos#index'
+  match '/about' => 'pages#show', :id => 'about'
+  match '/upstream' => 'events#index'
+  match '/downstream' => 'events#past'
+  match '/search' => 'search#search'
+  match '/play' => 'application#play'
+  match 'auth/:provider/callback' => 'authentications#create', :via => :get
+  match '/oauth/authenticate' => 'authentications#create', :via => :get
+  resources :authentications
+
+
+  root :to => 'application#home'
+
+end

@@ -1,0 +1,19 @@
+class EventsController < InheritedResources::Base
+
+  before_filter :authenticate_admin!, :only => [:create, :destroy, :new, :edit, :update]
+  
+  def index
+    @events = Event.published.order('events.when DESC')
+    @latest = @events.first
+  end
+
+  def past
+    @events = Event.future
+    @past = Event.past
+  end
+
+  def destroy
+    destroy! { '/admin' }
+  end
+
+end

@@ -1,0 +1,46 @@
+.twelve.columns.alpha
+  .post
+    = render :partial => 'post', :locals => {:post => @post}
+    - unless @post.comments.empty?
+      %h4 Discussion:
+      
+      - @post.comments.sort_by(&:created_at).each do |comment|
+        .comment.eleven.columns.alpha
+          .three.columns.alpha
+            = link_to_if(comment.user == current_user, image_tag(comment.user.icon), upload_avatar_user_path(comment.user))
+            .name= link_to comment.user.name, comment.user
+            - if comment.user == current_user
+              .meta= link_to 'Change photo', upload_avatar_user_path(comment.user)
+            .meta= "posted at #{l comment.created_at, :format => :short}"
+          .eight.columns.omega
+            .body= simple_format comment.body
+      
+    .new_comment.eleven.columns.alpha
+      %h4 Join the discussion!
+      - if user_signed_in?
+        .three.columns.alpha.comment
+          = image_tag(current_user.icon)
+          .name
+            Posting as:
+            = link_to current_user.name, current_user
+          .meta= link_to 'Sign out',  destroy_user_session_path, :method => :delete
+        .eight.columns.omega
+          = semantic_form_for [@post, @post.comments.build] do |f|
+            = f.input :body, :as => :text, :label => 'Your comment:'
+            = f.input :user_id, :as => :hidden, :value => current_user.id
+            = f.submit 'Add comment'
+        
+
+      - else
+        .sign_in.columns.alpha= render :partial => 'login_form'
+    
+.four.columns.omega.sidebar
+  .title Events
+  - Event.published.each do |event|
+    .event
+      = link_to (event) do
+        = image_tag event.images.first.imagefile.url(:sidebar)
+        .event_title= event.title
+        
+:javascript
+  $('.comment .body').readmore();

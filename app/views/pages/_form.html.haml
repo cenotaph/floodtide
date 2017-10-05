@@ -1,0 +1,31 @@
+= semantic_nested_form_for @page, :html => {:multipart => true} do |f|
+  - if @page.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@page.errors.count, "error")} prohibited this page from being saved:"
+      %ul
+        - @page.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.input :title
+  = f.input :subtitle
+  = f.input :body, :as => :ckeditor, :input_html => { :height => 400 }
+  - if f.object.carousel?
+    = image_tag f.object.carousel.url(:thumb)
+  = f.input :carousel, :label => 'Image for front carousel (optional)'
+  - if f.object.page_icon?
+    = image_tag f.object.page_icon.url(:thumb)  
+  = f.input :page_icon, :label => 'Image to be first column in front page (optional, for about page only, really)'
+  = f.input :page_icon_caption, :label => 'Caption for above front page image'  
+  = f.fields_for :images do |ff|
+    = ff.input :imagefile, :as => :file
+    = ff.input :id, :as => :hidden
+    = ff.input :attachable_type, :as => :hidden
+    = ff.input :attachable_id, :as => :hidden
+    = ff.input :caption
+    = ff.link_to_remove 'remove this image'
+  = f.link_to_add 'Add an additional image for page\'s own carousel' , :images  
+  = f.input :published
+
+
+  .actions
+    = f.submit 'Save'

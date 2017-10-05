@@ -1,0 +1,19 @@
+.omega.columns.alpha.event_main
+  .title= @page.title
+  .date= @page.try(:subtitle)
+  - unless @page.images.empty?
+    = render :partial => 'shared/carousel', :locals => {:images => @page.images }
+
+  .description
+    - if user_signed_in?
+      %span.edit_link= link_to '[edit]', edit_page_path(@page) 
+    = raw @page.body
+
+.four.columns.omega.sidebar
+  .title Events
+  - Event.published.each do |event|
+    .event
+      = link_to (event) do
+        = image_tag event.images.first.imagefile.url(:sidebar)
+        .event_title= event.title
+

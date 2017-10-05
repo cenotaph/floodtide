@@ -1,0 +1,23 @@
+.columns.twelve.alpha.event_main
+  .title
+    = @latest.title
+    - if user_signed_in?
+      %span.edit_link= link_to '[edit]', edit_event_path(@latest) 
+  .date= @latest.hidedate == true ? @latest.try(:hide_text) :  @latest.when.strftime('%B %d, %Y')
+  = render :partial => 'shared/carousel', :locals => {:images => @latest.images, :id => @latest.id }
+
+  .description= raw @latest.description
+
+.columns.omega.sidebar.four
+  .title Other Events
+  - @other = @events.to_a.delete_if{|x| x == @latest }.take(6)
+
+  - @other.each do |event|
+    .event
+      = link_to (event) do
+        = image_tag event.images.first.imagefile.url(:sidebar)
+        .event_title
+          = event.title
+          - if user_signed_in?
+            %span.edit_link= link_to '[edit]', edit_event_path(event)
+  = link_to 'See all past events...', archive_events_path

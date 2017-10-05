@@ -1,0 +1,15 @@
+- if @hits.empty?
+  %p Sorry, nothing matched your search terms. Please try again.
+
+- else
+  %p Search results:
+  - @hits.each do |hit|
+    .hit
+      - if hit.class == Page
+        .page_title= link_to hit.title, hit
+        .page_excerpt= truncate_html(hit.body, :length => 250)
+
+      - elsif hit.class == Event
+        .event_title= link_to hit.title, hit
+        .event_excerpt= truncate_html(hit.description, :length => 250)
+      .read_more= link_to 'Read more...', hit

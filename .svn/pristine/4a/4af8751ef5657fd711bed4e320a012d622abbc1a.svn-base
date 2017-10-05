@@ -1,0 +1,18 @@
+.twelve.columns.alpha.posts_main
+  %h2 Floodtide Conversations
+  - @posts.each do |post|
+    .post
+      = render :partial => 'post', :locals => {:post => post}
+      .comments_overview
+        - if post.comments.empty?
+          %h4= link_to 'Comments and discussion...', post
+        - else
+          %h4= link_to pluralize(post.comments.size, 'comment') + ' ... join the discussion!', post
+  
+.four.columns.omega.sidebar
+  .title Events
+  - Event.published.each do |event|
+    .event
+      = link_to (event) do
+        = image_tag event.images.first.imagefile.url(:sidebar)
+        .event_title= event.title

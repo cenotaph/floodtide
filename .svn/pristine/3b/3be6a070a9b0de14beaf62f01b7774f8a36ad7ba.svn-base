@@ -1,0 +1,47 @@
+%h4 Floodtide administration
+
+%p
+  You are logged in as 
+  = current_user.email
+  = link_to '[logout]', destroy_user_session_path, :method => :delete
+
+.admin.sixteen.columns
+  .archives.eight.columns.alpha
+    %h5 Archive
+    - @archive_videos.each do |video|
+      .video.eight.columns
+        .five.columns.alpha
+          = link_to video.name, edit_video_path(video)
+        .one.column.omega= link_to 'DELETE', video, :data => {:confirm => 'Are you sure?'}, :method => :delete
+
+    = link_to 'Create new video', new_video_path, :class => :new_admin_link
+  .posts.eight.columns.omega
+    %h5 Posts
+    - @posts.each do |post|
+      .post.eight.columns
+        .five.columns.alpha
+          = link_to post.title, edit_post_path(post)
+        .two.columns.alpha.date= post.published == true ? post.published_at.strftime("%d %B %Y") : 'unpublished'
+        .one.column.omega= link_to 'DELETE', post, :data => {:confirm => 'Are you sure?'}, :method => :delete
+    = link_to 'Create new post', new_post_path, :class => :new_admin_link
+.admin.sixteen.columns
+
+  .events.eight.columns.alpha
+    %h5 Events
+    - @events.each do |event|
+      .event.eight.columns
+        .five.columns.alpha
+          = link_to event.title, edit_event_path(event)
+        .two.columns.alpha.date= event.when.strftime("%d %B %Y") rescue 'no date'
+        .one.column.omega= link_to 'DELETE', event, :confirm => 'Are you sure?', :method => :delete
+
+    = link_to 'Create new event', new_event_path, :class => :new_admin_link
+
+  .pages.eight.columns.omega
+    %h5 Pages
+    - @pages.each do |page|
+      .page.eight.columns
+        .six.columns.alpha
+          = link_to page.title, edit_page_path(page)
+        .two.columns.omega= truncate_html(sanitize(page.body), :length => 30)
+    = link_to 'Create new page', new_page_path, :class => :new_admin_link

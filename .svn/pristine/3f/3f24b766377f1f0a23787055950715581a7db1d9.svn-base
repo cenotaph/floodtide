@@ -1,0 +1,16 @@
+%div{:id => "slidebox_#{id}"}
+  .slides_container
+    - images.each_with_index do |b, i|
+      .slide{:style => 'min-height: 474px;'}
+        .slide_image= image_tag b.imagefile.url(:full)
+        - unless b.caption.blank?
+          .caption_smaller
+            .event_title= b.caption
+
+
+
+- if images.size > 1
+  :javascript
+    $(document).ready(function () {
+      $("#slidebox_#{id}").slides({play: 5000});
+    });

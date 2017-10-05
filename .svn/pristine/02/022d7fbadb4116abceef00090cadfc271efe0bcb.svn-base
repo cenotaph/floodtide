@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  dwhen: 2012-11-18
+  weblink1: MyString
+  weblink2: MyString
+  description: MyText
+  published: false
+
+two:
+  title: MyString
+  dwhen: 2012-11-18
+  weblink1: MyString
+  weblink2: MyString
+  description: MyText
+  published: false

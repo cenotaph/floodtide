@@ -1,0 +1,21 @@
+.columns.twelve.alpha.event_main
+  - @past.each do |event|
+    .past_event
+      .title= link_to event.title, event
+      .date= event.hidedate == true ? event.try(:hide_text) :  event.when.strftime('%B %d, %Y')
+      = render :partial => 'shared/carousel', :locals => {:images => event.images, :id => event.id }
+
+      .description= raw event.description
+
+.four.columns.omega.sidebar
+  .title Upcoming Events
+
+  - if @events.empty?
+    %em There are no upcoming events.
+  - else
+    - @events.each do |event|
+      .event
+        = link_to (event) do
+          = image_tag event.images.first.imagefile.url(:sidebar)
+          .event_title= event.title
+

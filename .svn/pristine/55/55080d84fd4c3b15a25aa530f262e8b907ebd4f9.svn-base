@@ -1,0 +1,56 @@
+= semantic_nested_form_for @event, :html => {:multipart => true } do |f|
+  = f.semantic_errors :name
+  = f.input :title
+  = f.input :subtitle, :label => 'Subtitle (eg. "Norwich, 2010")'
+  = f.input :when, :as => :string, :input_html => {:class => 'datepicker'}, :label => 'Date'
+  = f.input :hidedate, :as => :boolean, :label => "Don't show date on public site"
+  = f.input :hide_text, :label => "If above is ticked, replace date with this text"
+  = f.input :description, :as => :ckeditor, :input_html => { :height => 400 }
+  .media.sixteen.columns
+    = f.fields_for :images do |ff|
+      = ff.semantic_errors :name
+      .add_image
+        Add an image:
+        - unless ff.object.new_record?
+          = image_tag ff.object.imagefile.url(:thumb)
+        = ff.input :imagefile, :as => :file
+        = ff.input :id, :as => :hidden
+        = ff.input :attachable_type, :as => :hidden
+        = ff.input :attachable_id, :as => :hidden
+        = ff.input :caption
+        = ff.link_to_remove 'remove this image'
+    .one-third.column.alpha= f.link_to_add 'add an image', :images
+
+    = f.fields_for :soundclouds do |ff|
+      = f.semantic_errors :name
+      .add_image
+        Add a soundcloud embed:
+        /= ff.input :event_id, :as => :hidden
+        = ff.input :title
+        = ff.input :codenumber, :label => "Soundcloud ID #"
+        = ff.input :published, :label => "Publish/show on site? (Untick to hide from public)"
+        = ff.link_to_remove 'remove this soundcloud file'
+    .one-third.column= f.link_to_add 'add a soundcloud file', :soundclouds
+
+    = f.fields_for :videos do |ff|
+      = ff.semantic_errors :name
+      .add_image
+        Add a vimeo video:
+        - unless ff.object.new_record?
+          - v = Vimeo::Simple::Video.info(ff.object.codenumber)
+          = image_tag v.first['thumbnail_medium']
+        /= ff.input :event_id, :as => :hidden
+        = ff.input :title
+        = ff.input :codenumber, :label => "Vimeo ID #"
+        = ff.input :published, :label => "Publish/show on site? (Untick to hide from public)"
+        = ff.link_to_remove 'remove this vimeo file'
+    .one-third.column.omega= f.link_to_add 'add a vimeo video', :videos
+  = f.input :weblink1
+  = f.input :weblink2
+  = f.input :published
+  = f.submit
+
+:javascript
+  $(function() {
+    $('.datepicker').datepicker({ dateFormat: 'dd-mm-yy' });
+  });

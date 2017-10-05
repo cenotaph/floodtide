@@ -1,0 +1,8 @@
+%h2 Tide Archives
+.sixteen.columns.alpha.omega.archives
+  - @videos.each do |video|
+    .four.columns.alpha.omega.video
+      .inner
+        = link_to video.url do
+          = image_tag video.thumbnail.url(:sidebar)
+          .title= video.title

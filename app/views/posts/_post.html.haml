@@ -1,0 +1,10 @@
+%h3= link_to post.title, post
+- if post.published
+  .post_meta= "posted by #{post.user.name} on #{post.published_at.strftime("%d %B %Y")}"
+- else
+  .post_meta
+    %b NOT YET PUBLISHED
+.post_body
+  = raw post.body
+
+  

@@ -1,0 +1,51 @@
+.sixteen.columns.front_carousel.alpha
+  #front_slidebox
+    %iframe{:height => "480", :src => "https://www.google.com/maps/d/embed?mid=ztPJkfen6N_A.kDLrYqq8kM-Y", :width => "640"}
+    / .slides_container
+    /   .slide{:style => 'min-height: 434px;'}
+    /     = link_to 'https://www.google.com/maps/d/embed?mid=ztPJkfen6N_A.kDLrYqq8kM-Y' do
+    /       .slide_image= image_tag 'http://floodtide.eu/uploads/image/imagefile/149/front_map_screen_shot.png'
+    /       .caption
+    /         .event_title Floodtide Navigate
+    /         .event_subtitle March to August 2015
+    /   - @carousel.each do |c|
+    /     - if c.class == Event
+    /       .slide{:style => 'min-height: 434px;'}
+    /         = link_to(c) do
+    /           .slide_image= image_tag c.images.first.imagefile.url(:front)
+    /           .caption
+    /             .event_title= c.title
+    /             .event_subtitle= c.subtitle_display
+    /     - elsif c.class == Page
+    /       .slide{:style => 'min-height: 434px;'}
+    /         = link_to(c) do
+    /           .slide_image= image_tag c.carousel.url(:front)
+    /           .caption
+    /             .event_title= c.title
+.about_front.sixteen.columns.alpha
+  .front_heading About Floodtide
+  .one-third.column.alpha
+    = image_tag @about.page_icon.url
+    - unless @about.page_icon_caption.blank?
+      .front_caption= @about.page_icon_caption
+  .two-thirds.column.omega
+    = truncate_html(raw(@about.body), :length => 600)
+    .read_more= link_to 'read more', @about
+
+.archive_front.sixteen.columns.alpha
+  .front_heading Archive
+  - @archive.each_with_index do |arc, index|
+    .one-third.column{:class => (index == 2 ? :omega : (index == 0 ? :alpha : false))} 
+      = link_to(arc) do
+        .front_title= arc.title
+        .front_subtitle= arc.subtitle_display
+        .read_more= link_to 'read more', arc
+      - unless arc.images.empty?
+      
+        = link_to image_tag(arc.images.first.imagefile.url(:front_archive)), arc 
+
+
+// :javascript
+//   $(document).ready(function () {
+//     $("#front_slidebox").slides();
+//   });

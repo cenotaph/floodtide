@@ -1,0 +1,46 @@
+class ApplicationController < ActionController::Base
+  protect_from_forgery
+  before_filter :authenticate_admin!, :only => [:admin]
+  
+  
+  def admin
+    @events = Event.all
+    @pages = Page.all
+    @archive_videos = Video.archive
+    @posts = Post.all
+  end
+  
+
+  def home
+    @carousel = []
+    @carousel += Event.future.delete_if{|x| x.images.empty? }
+    @archive = Event.past.published.order('rand()').limit(3)
+    @about = Page.find('about')  
+    @carousel << @about
+    past = Event.past.delete_if{|x| x.images.empty? }
+    if past.length > 3
+      @carousel += past[0..2]
+    else
+      @carousel += pastd
+    end
+
+  end
+  
+  def play
+  end
+
+  
+  def authenticate_admin!
+    if user_signed_in?
+      if !current_user.admin?
+        flash[:error] = 'You must be an admin to access this.'
+        redirect_to '/admin_sign_in'
+      end
+    else
+      flash[:error] = 'You must be an admin to access this.'
+      redirect_to '/admin_sign_in'
+    end
+  end
+  
+
+end

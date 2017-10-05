@@ -1,0 +1,12 @@
+%h2 Upload photo
+
+%p You can upload a photo of yourself to appear next to your comments. Maximum size 120x120 pixels (images will be resized to this).
+
+%p
+  Current image:
+
+= image_tag @user.icon(:sidebar)
+
+= semantic_form_for @user, :html => {:multipart => true } do |f|
+  = f.input :avatar, :label => 'New image (JPG, GIF, PNG allowed):'
+  = f.submit 'Save'

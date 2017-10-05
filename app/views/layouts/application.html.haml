@@ -1,0 +1,57 @@
+!!! 5
+%html
+  %head
+    %title Floodtide
+    %meta{ :charset => "utf-8" }/
+    = stylesheet_link_tag  "application", :media => "all"
+    = javascript_include_tag "application"
+    / %meta{ :content => "width=device-width; initial-scale=1.0", :name => "viewport" }/
+    = csrf_meta_tags
+    / %meta{:property => "fb:app_id", :content => (Rails.env == 'development' ? "361608853869521" : "248448965247367")}  
+    / = display_meta_tags :site => 'Floodtide'
+  %body
+    .container
+      #header.sixteen.columns
+        .ft_header.seven.columns.alpha= link_to image_tag('floodtide-logo.png'), '/'
+        .header_menu.nine.columns.omega
+          %ul
+            %li= link_to 'Upstream', '/upstream'
+            %li= link_to 'Downstream', '/downstream'
+            %li= link_to 'Play', '/play'
+            %li= link_to 'Tide Archives', '/archive'
+            %li= link_to 'Blog', posts_path
+            - if user_signed_in?
+              - if current_user.admin?
+                %li= link_to 'Admin', '/admin'
+              %li= link_to 'Sign Out', destroy_user_session_path, :method => :delete
+      - flash.each do |name, msg|
+        - if msg.is_a?(String)
+          = content_tag :div, msg, :id => "flash_#{name}"
+      
+      .body= yield
+      #footer.sixteen.columns
+        .left
+          .title Contact
+          .email= link_to 'info@floodtide.eu', 'mailto:info@floodtide.eu'
+          .facebook= link_to image_tag('facebook_icon.png'), 'http://www.facebook.com/floodtidemusic'
+          .twitter= link_to image_tag('twitter_icon.png'), 'http://twitter.com/floodtidemusic'
+        .supporters
+          = image_tag 'lottery_png_black1.png'
+          = image_tag 'trinity.png'
+          = image_tag 'nortek.png'
+        .search
+          #mc_embed_signup
+            %form#mc-embedded-subscribe-form.validate{:action => "//floodtide.us6.list-manage.com/subscribe/post?u=018cba64adeb30a43b904c309&id=a504d4c6a1", :method => "post", :name => "mc-embedded-subscribe-form", :novalidate => "", :target => "_blank"}
+              #mc_embed_signup_scroll
+                %input#mce-EMAIL.email{:name => "EMAIL", :placeholder => "Enter your email for our list", :required => "", :type => "email", :value => ""}/
+                / real people should not fill this in and expect good things - do not remove this or risk form bot signups
+                %div{:style => "position: absolute; left: -5000px;"}
+                  %input{:name => "b_018cba64adeb30a43b904c309_a504d4c6a1", :tabindex => "-1", :type => "text", :value => ""}/
+                %input#mc-embedded-subscribe.button{:name => "subscribe", :type => "submit", :value => ""}/
+          = form_tag '/search' do
+            = text_field_tag :searchterm, 'Search', :class => :searchfield
+            = submit_tag ''
+:javascript
+  $(document).ready(function() {
+    $('.searchfield').clearField();
+  });

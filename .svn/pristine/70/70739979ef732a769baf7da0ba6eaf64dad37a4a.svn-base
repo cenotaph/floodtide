@@ -1,0 +1,21 @@
+class VideosController < InheritedResources::Base
+
+  before_filter :authenticate_admin!, :only => [:create, :destroy, :new, :edit, :update]
+  
+  def create
+    create! { '/admin' }
+  end
+  
+  def destroy
+    destroy! { '/admin' }
+  end
+  
+  def index
+    @videos = Video.archive.order('created_at DESC')
+  end
+  
+  def update
+    update! { '/admin'}
+  end
+  
+end

@@ -1,0 +1,19 @@
+%p Please identify yourself through one of the following services to join the discussion:
+
+.three.columns.alpha
+  = link_to '/auth/facebook' do
+    %center
+      = image_tag 'facebook_icon.png'
+      .title Sign in via Facebook
+    
+.three.columns
+  = link_to '/auth/twitter' do
+    %center
+      = image_tag 'twitter_icon.png'
+      .title Sign in via Twitter
+  
+.three.columns
+  = link_to '/auth/google_oauth2' do
+    %center
+      = image_tag 'google_icon.png'
+      .title Sign in via Google/GMail

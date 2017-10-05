@@ -1,0 +1,7 @@
+- w = video['width'] ||= 690
+- h = video['height'] ||= 500
+- if w.to_i > 690
+  - w = 690
+  - h = 500
+%iframe{:allowfullscreen => "", :frameborder => "0", :height => h.to_i, :mozallowfullscreen => "", :src => "http://player.vimeo.com/video/" + video['id'].to_s + "?badge=0", :webkitallowfullscreen => "", :width => w.to_i}
+

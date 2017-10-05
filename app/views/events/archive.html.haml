@@ -1,0 +1,8 @@
+.sixteen.columns.event_archive
+  .title Event archive
+  - @events.each do |event|
+    .event_archive_event
+      = link_to (event) do
+        = image_tag event.images.first.imagefile.url(:sidebar)
+        .event_title= event.title
+        .event_date= l event.when, format: :long
